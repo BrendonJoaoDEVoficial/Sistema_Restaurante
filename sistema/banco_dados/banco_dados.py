@@ -7,7 +7,7 @@
 import csv
 
 class BancoDados:
-    def __init__(self, objetos*):
+    def __init__(self, objetos):
         """Método Construtor
 
         Args:
@@ -15,9 +15,17 @@ class BancoDados:
         """        
         self.objetos = [objetos]
     
-    def salvar(self):
-        pass
-    
+    def salvar(self,dados_novos, caminho):
+        if caminho:
+            with open(caminho, 'r') as arquivo_lido:
+                leitor = csv.DictReader(arquivo_lido, delimiter=';')
+                dados_existentes = list(leitor)
+            
+            dados_totais = dados_existentes.extend(dados_novos)
+            
+            with open(caminho, 'w') as arquivo_atual:
+                escritor = csv.DictWriter()
+                    
     def ler(self):
         pass
     
