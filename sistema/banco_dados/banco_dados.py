@@ -23,8 +23,18 @@ class BancoDados:
             
             dados_totais = dados_existentes.extend(dados_novos)
             
-            with open(caminho, 'w') as arquivo_atual:
-                escritor = csv.DictWriter()
+            with open(caminho, 'w', newlines='') as arquivo_atual:
+                campos = []
+                for dados in dados_totais:
+                    for chave in dados.keys():
+                        if chave not in campos:
+                            campos.append(chave)
+                
+                escritor = csv.DictWriter(arquivo_atual, fieldnames=campos, delimiter=';')
+                
+                escritor.writeheader()
+                
+                escritor.writerows(dados_totais)
                     
     def ler(self):
         pass
