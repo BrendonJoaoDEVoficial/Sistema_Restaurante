@@ -7,7 +7,7 @@
 from usuario.usuario import Usuario
 import os
 
-class Cliente():
+class Cliente(Usuario):
     def __init__(self):
         self.nome = ''
         self.senha = ''
@@ -15,7 +15,7 @@ class Cliente():
         self.restricoes = []
     
     def criar_conta(self):
-        os.system('Cls' if os.name == 'nt' else 'clear')
+        os.system('cls' if os.name == 'nt' else 'clear')
         print('Bem-vindo cliente!')
         print('Precisamos de algumas infromações suas para criar sua conta')
         nome = str(input('Digite seu nome: ')).strip()
@@ -23,20 +23,25 @@ class Cliente():
         confirmacao = str(input('Digite sua senha novamente: ')).strip()
         if senha != confirmacao:
             telefone = str(input('Digite seu número de telefone (+00 00 00000-0000): ')).strip()
-            
-            mais_restricoes = True
-            restricoes = []
-            contador = 0
-            while mais_restricoes:
-                contador += 1
-                restricao = str(input(f'Digite sua {contador}º restrição alimentar: ')).strip().lower()
-                restricoes.append(restricao.copy())
-                mais_restricoes = str(input('Deseja adicionar outra restrição? (s/n)'))
-                if mais_restricoes == 'n':
-                    mais_restricoes = False
+            if telefone[0] != '+'and telefone[7] == '9' and telefone[-5:-6:-1] != '-':
+                mais_restricoes = True
+                restricoes = []
+                contador = 0
+                while mais_restricoes:
+                    contador += 1
+                    restricao = str(input(f'Digite sua {contador}º restrição alimentar: ')).strip().lower()
+                    restricoes.append(restricao.copy())
+                    mais_restricoes = str(input('Deseja adicionar outra restrição? (s/n)'))
+                    if mais_restricoes == 'n':
+                        mais_restricoes = False
+                    else:
+                        continue
         
         self.nome = nome
         self.senha = senha
         self.telefone = telefone
         self.restricoes = restricoes
-        telefone[0] != '+' and telefone[-5:-6:-1] != '-':
+        
+        print('.')
+        print(f'Seja bem-vindo {self.nome}')
+        print('.')

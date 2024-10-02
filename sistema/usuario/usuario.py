@@ -41,7 +41,7 @@ class Usuario(ABC):
         pass
     
     @abstractmethod
-    def entrega(self, preco ):
+    def entrega(self, preco):
         pass
     
     @abstractmethod
