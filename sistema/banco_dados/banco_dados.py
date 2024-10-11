@@ -8,39 +8,55 @@ import csv
 
 class BancoDados:
     def __init__(self, objetos):
-        """Método Construtor
-
-        Args:
-            objetos (list): Lista de objetos para salvar.
-        """        
         self.objetos = [objetos]
     
-    def salvar(self,dados_novos, caminho):
-        if caminho:
-            with open(caminho, 'r') as arquivo_lido:
-                leitor = csv.DictReader(arquivo_lido, delimiter=';')
-                dados_existentes = list(leitor)
+    def salvar(self, caminho_arquivo, campos_arquivo, dados_arquivo):
+        with open(caminho_arquivo, 'w', newline='') as arquivo_csv:
+            campos = [campos_arquivo]
+            escritor = csv.DictWriter(arquivo_csv, fieldnames=campos, delimiter=';')
+            escritor.writeheader()
+            escritor.writerows(dados_arquivo)
+     
+    def ler(self, caminho_arquivo):
+        informacoes = []
+        with open(caminho_arquivo, 'r') as arquivo_csv:
+            leitor = csv.DictReader(arquivo_csv, delimiter=';')
+            for linha in leitor:
+                informacoes.append(linha)
+        return informacoes
+
+    def atualizar(self, caminho_arquivo, chave_primaria, novos_valores):
+        with open(caminho_arquivo, 'r') as arquivo_csv:
+            leitor = csv.DictReader(arquivo_csv, delimiter=';')
+            informacoes = list(leitor)
+        
+        for dado in informacoes:
+            if dado == chave_primaria:
+                # Achar forma de substituir os dados corretos.
+
+        with open(caminho_arquivo, 'w', newline='') as arquivo_csv:
+            campos = [] # Achar forma de pegar os campos já existentes.
+            escritor = csv.DictWriter(arquivo_csv, fieldnames=campos, delimiter=';')
+            escritor.writeheader()
+            escritor.writerows(informacoes)
             
-            dados_totais = dados_existentes.extend(dados_novos)
-            
-            with open(caminho, 'w', newlines='') as arquivo_atual:
-                campos = []
-                for dados in dados_totais:
-                    for chave in dados.keys():
-                        if chave not in campos:
-                            campos.append(chave)
-                
-                escritor = csv.DictWriter(arquivo_atual, fieldnames=campos, delimiter=';')
-                
-                escritor.writeheader()
-                
-                escritor.writerows(dados_totais)
-                    
-    def ler(self):
-        pass
-    
-    def atualizar(self, nome, dado):
-        pass
-    
     def deletar(self, nome):
-        pass
+        with open(arquivo, 'r') as arquivo_csv:
+            leitura = csv.DictReader(arquivo_csv, delimiter=';')
+            cadastro = list(leitura)
+
+        # Verificando se o nome existe e apagando o registro
+        apagado = False
+        novo_cadastro = [registro for registro in cadastro \
+            if registro['nome'] != nome_para_apagar]
+
+        if len(novo_cadastro) < len(cadastro):
+            apagado = True
+
+        # Reescrevendo o arquivo com os dados atualizados
+        with open(arquivo, 'w', newline='') as arquivo_csv:
+            campos = ['nome', 'telefone', 'cidade']
+            escrever = csv.DictWriter(arquivo_csv, fieldnames=campos, delimiter=';')
+            
+            escrever.writeheader()
+            escrever.writerows(novo_cadastro)
