@@ -35,13 +35,13 @@ class BancoDados:
                 # Achar forma de substituir os dados corretos.
 
         with open(caminho_arquivo, 'w', newline='') as arquivo_csv:
-            campos = [] # Achar forma de pegar os campos já existentes.
+            campos = [campo for campo in arquivo_csv.readline()]
             escritor = csv.DictWriter(arquivo_csv, fieldnames=campos, delimiter=';')
             escritor.writeheader()
             escritor.writerows(informacoes)
             
-    def deletar(self, nome):
-        with open(arquivo, 'r') as arquivo_csv:
+    def deletar(self, caminho_arquivo, chave_primaria):
+        with open(caminho_arquivo, 'r') as arquivo_csv:
             leitura = csv.DictReader(arquivo_csv, delimiter=';')
             cadastro = list(leitura)
 
